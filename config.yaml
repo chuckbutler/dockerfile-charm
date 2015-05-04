@@ -7,10 +7,6 @@ options:
     type: string
     default:
     description: "Relative path to build-script in the repository for the Dockerfile"
-  start-script:
-    type: string
-    default:
-    description: "Relative path to start-script in the repository for the Dockerfile"
   path:
     type: string
     default: "/home/ubuntu/dockerfile"
