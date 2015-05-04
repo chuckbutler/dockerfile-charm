@@ -1,0 +1,17 @@
+options:
+  repository:
+    type: string
+    default:
+    description: "Github repository containing a Dockerfile to deploy"
+  build-script:
+    type: string
+    default:
+    description: "Relative path to build-script in the repository for the Dockerfile"
+  start-script:
+    type: string
+    default:
+    description: "Relative path to start-script in the repository for the Dockerfile"
+  path:
+    type: string
+    default: "/home/ubuntu/dockerfile"
+    description: "Absolute path to clone repository into"

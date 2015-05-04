@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -eux
+
+BUILD=$(config-get build-script)
+LOCALPATH=$(config-get path)
+REPOSITORY=$(config-get repository)
+
+PROJECT_DIR=$(echo $REPOSITORY | awk -F'/' '{print $5}' | sed 's/.git//')
+APP_PATH="$LOCALPATH/$PROJECT_DIR"
+
+mkdir -p $LOCALPATH
+
+if [ ! -d $APP_PATH ]; then
+    git clone $REPOSITORY $APP_PATH
+else
+    cd $APP_PATH
+    git pull origin master
+    cd $CHARM_DIR
+fi
+
+chown -R ubuntu:ubuntu $APP_PATH
+
+PROJECT_RELATION=$(relation-ids project)
+if [[ ! -z "$PROJECT_RELATION" ]]; then
+    relid=$(echo $PROJECT_RELATION | awk -F':' '{print $2}')
+    relation-set -r $relid buildscript=$BUILD
+    relation-set -r $relid localpath=$APP_PATH
+    relation-set -r $relid repository=$REPOSITORY
+fi
+

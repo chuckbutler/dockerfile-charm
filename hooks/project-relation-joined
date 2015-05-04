@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -eu
+
+BUILD=$(config-get build-script)
+LOCALPATH=$(config-get path)
+REPOSITORY=$(config-get repository)
+STARTSCRIPT=$(config-get start-script)
+
+PROJECT_DIR=$(echo $REPOSITORY | awk -F'/' '{print $5}' | sed 's/.git//')
+APP_PATH="$LOCALPATH/$PROJECT_DIR"
+
+
+relation-set buildscript=$BUILD
+relation-set localpath=$APP_PATH
+relation-set repository=$REPOSITORY
+
